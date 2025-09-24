@@ -1,4 +1,4 @@
-﻿
+﻿/*
 [assembly: Parallelize(Scope = ExecutionScope.MethodLevel)]
 
 namespace CoffeeOrder.Tests
@@ -12,3 +12,4 @@ namespace CoffeeOrder.Tests
         }
     }
 }
+*/

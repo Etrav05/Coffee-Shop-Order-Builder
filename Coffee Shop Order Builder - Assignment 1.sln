@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeOrder", "Coffee Shop Order Builder - Assignment 1\CoffeeOrder.csproj", "{019D7C62-1450-43FC-86A9-4E74CEC6ADF2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeOrder.Tests", "CoffeeOrder.Tests\CoffeeOrder.Tests.csproj", "{47A60878-F508-4A6A-8A8F-68082AC7EF33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeOrder", "CoffeeOrder2\CoffeeOrder.csproj", "{232591DF-1E33-478D-917A-26DE5BA2766A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{019D7C62-1450-43FC-86A9-4E74CEC6ADF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{019D7C62-1450-43FC-86A9-4E74CEC6ADF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{019D7C62-1450-43FC-86A9-4E74CEC6ADF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{019D7C62-1450-43FC-86A9-4E74CEC6ADF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47A60878-F508-4A6A-8A8F-68082AC7EF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47A60878-F508-4A6A-8A8F-68082AC7EF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47A60878-F508-4A6A-8A8F-68082AC7EF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47A60878-F508-4A6A-8A8F-68082AC7EF33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232591DF-1E33-478D-917A-26DE5BA2766A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232591DF-1E33-478D-917A-26DE5BA2766A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232591DF-1E33-478D-917A-26DE5BA2766A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232591DF-1E33-478D-917A-26DE5BA2766A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

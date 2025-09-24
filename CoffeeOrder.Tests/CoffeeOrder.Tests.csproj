@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Coffee Shop Order Builder - Assignment 1\CoffeeOrder.csproj" />
+    <ProjectReference Include="..\CoffeeOrder2\CoffeeOrder.csproj" />
   </ItemGroup>
 
   <ItemGroup>

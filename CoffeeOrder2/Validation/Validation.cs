@@ -1,6 +1,8 @@
-﻿using CoffeeOrder.Models;
+﻿/*
+using CoffeeOrder.Models;
 
 namespace CoffeeOrder.Validation;
+
 
 public static class OrderValidator
 {
@@ -14,7 +16,7 @@ public static class OrderValidator
         }
 
         // Required fields
-        if (string.IsNullOrWhiteSpace(beverage.BaseBeverage))
+        if (string.IsNullOrWhiteSpace(beverage.BaseDrink))
             errors.Add("A base beverage is required.");
 
         if (string.IsNullOrWhiteSpace(beverage.Size))
@@ -39,3 +41,4 @@ public static class OrderValidator
         return errors.Count == 0 ? ValidationResult.Ok() : ValidationResult.Fail(errors.ToArray());
     }
 }
+*/

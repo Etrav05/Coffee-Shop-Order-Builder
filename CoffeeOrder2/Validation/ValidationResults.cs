@@ -1,5 +1,6 @@
-﻿
+﻿/*
 namespace CoffeeOrder.Validation;
+
 
 public sealed class ValidationResult
 {
@@ -15,3 +16,4 @@ public sealed class ValidationResult
     public static ValidationResult Ok() => new ValidationResult(true, Array.Empty<string>());
     public static ValidationResult Fail(params string[] errors) => new ValidationResult(false, errors ?? Array.Empty<string>());
 }
+*/
