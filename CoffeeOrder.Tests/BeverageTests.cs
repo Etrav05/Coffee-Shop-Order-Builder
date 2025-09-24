@@ -178,7 +178,7 @@ namespace CoffeeOrder.Tests
             var result = beverage.Syrups;
 
             // Assert
-            CollectionAssert.AreEqual(expected, result); // used "CollectionAssert" comparing arrays 
+            CollectionAssert.AreEqual(expected, result); // Used CollectionAssert as we are comparing 2 lists
         }
 
         [TestMethod]
