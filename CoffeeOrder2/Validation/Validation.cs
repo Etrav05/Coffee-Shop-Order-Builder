@@ -36,8 +36,8 @@ public static class OrderValidator
             errors.Add("A size selection is required.");
 
         // Mutually exclusive Hot and Iced 
-        // if (beverage.Temp == "Hot" && beverage.Temp == "Iced" ) // Making sure a single temperature is entered
-        // errors.Add("Temperature selection may not be Hot and Iced.");
+        if (beverage.Temp != "Hot" && beverage.Temp != "Iced" ) // Making sure a either temperature is entered
+            errors.Add("Temperature selection may either be Hot and Iced.");
 
         // Milk XOR rule: cannot select both dairy and plant milk
         if (!string.IsNullOrWhiteSpace(beverage.Milk) && !string.IsNullOrWhiteSpace(beverage.PlantMilk)) // Checking that not both milk and plantmilk options are entered

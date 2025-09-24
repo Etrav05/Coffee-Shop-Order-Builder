@@ -54,6 +54,29 @@ namespace CoffeeOrder.Tests
         }
 
         [TestMethod]
+        public void CreateInvalidBeverage_NotHot_OrIced_CheckResultOfBeverageValidation_IsFalse()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge",
+                                "Something Tasteful", // Not hot or iced
+                                "Cow",
+                                null, 
+                                3,
+                                ["Caramel", "Unicorn"],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass"],
+                                true
+                              );
+
+            // Act
+            var result = OrderValidator.Validate(beverage);
+
+            // Assert
+            Assert.IsFalse(result.IsValid);
+        }
+
+        [TestMethod]
         public void CreateInvalidBeverage_20Shots_CheckResultOfBeverageValidation_IsFalse()
         {
             // Arrange
