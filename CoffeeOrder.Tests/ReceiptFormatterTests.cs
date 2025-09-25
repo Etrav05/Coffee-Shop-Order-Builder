@@ -1,7 +1,9 @@
 ﻿using CoffeeOrder.Models;
+using CoffeeOrder.Receipt;
 using CoffeeOrder.Pricing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,31 +20,167 @@ namespace CoffeeOrder.Tests
     {
 
         [TestMethod]
-        public void CreateBeverage_CalculatePricing_Classify_FormateData()
+        public void CreateBeverage_FormatData_CheckBaseDrink_and_Size()
         {
             // Arrange
             var beverage = new Beverage(
                                 "London Fog",
-                                "XLarge", // $12
+                                "XLarge", 
                                 "Hot",
-                                "Cow", // $0
-                                null, // $0
-                                3,   // $1x3
-                                ["Caramel", null], // $1.25
-                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"], // $0.75x5
-                                true
+                                "Cow", 
+                                null,
+                                3,   
+                                ["Caramel", null], 
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
             );
 
-            var expected = " 1x London Fog, Cow milk, Caramel, Nuts, Flakes, Sprinkles, Glass, Bark" // Line items
-                         + " No discount applied " // Discounts
-                         + " $20 "                // Total
-                         + " Contains Nuts ";    // Warnings
+            string expected = "London Fog - XLarge";
+
+            string promoCode = null;
 
             // Act
-            var result = PricingCalculator.PricingCalculation(beverage);
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            StringAssert.Contains(result, expected);
         }
+
+        [TestMethod]
+        public void CreateBeverage_FormatData_CheckMilk()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge", 
+                                "Hot",
+                                "Cow",
+                                null, 
+                                3,   
+                                ["Caramel", null], 
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Milk: Cow";
+
+            string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+
+        [TestMethod]
+        public void CreateBeverage_FormatData_CheckSyrup()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge", 
+                                "Hot",
+                                "Cow", 
+                                null, 
+                                3,   
+                                ["Caramel", "Chocolate", null],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Syrup(s):\n  - Caramel\n  - Chocolate";
+
+            string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+
+        [TestMethod]
+        public void CreateBeverage_FormatData_CheckToppings()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge",
+                                "Hot",
+                                "Cow",
+                                null,
+                                3,
+                                ["Caramel", "Chocolate", null],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Topping(s):\n  - Nuts\n  - Flakes\n  - Sprinkles\n  - Glass\n  - Bark";
+
+            string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+
+        [TestMethod]
+        public void CreateBeverage_FormatData_CheckTotal()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge",
+                                "Hot",
+                                "Cow",
+                                null,
+                                3,
+                                ["Caramel", "Chocolate", null],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Total: $21.25"; // typicaly 20 but we add that chocolate syrup (+1.25)
+
+            string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+
+        //////////////////////////////////// FAILING TEST ////////////////////////////////////
+        [TestMethod]
+        public void CreateBeverage_FormatData_CheckWarnings()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge",
+                                "Hot",
+                                "Cow",
+                                null,
+                                3,
+                                ["Caramel", "Chocolate", null],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Warning(s):\n  - Caffinated\n  - Contains dairy\n  - Not vegan\n  - Adult\n  - Contains nuts"; 
+                                                                                                       // Nuts not implemented yet
+            string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+        //////////////////////////////////////////////////////////////////////////////////////
     }
 }

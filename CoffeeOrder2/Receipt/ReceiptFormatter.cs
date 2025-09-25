@@ -1,4 +1,5 @@
-﻿using CoffeeOrder.Models;
+﻿using CoffeeOrder.Classifiers;
+using CoffeeOrder.Models;
 using CoffeeOrder.Pricing;
 using CoffeeOrder.Promotions;
 using CoffeeOrder.Validation;
@@ -66,15 +67,33 @@ public class ReceiptFormatter
         /////////////////////////////
 
         ///// DISCOUNTS & PRICE /////
-
         double price = PricingCalculator.PricingCalculation(beverage);
 
         double discountedPrice = PromotionHelper.ApplyPromotion(beverage, promoCode);
 
+        double discount = (1 - (discountedPrice / price)) * 100;
+
         if (price != discountedPrice)
-            receipt += "Promotion applied: " + promoCode;
+            receipt += "\nPromotion applied: " + promoCode + " - " + Math.Round(discount, 0) + "%\n";
         else
-            receipt += "No promotion applied: " + promoCode;
+            receipt += "\nNo promotion applied";
+
+        receipt += "\nTotal: " + "$" + discountedPrice.ToString("0.00") + "\n"; // Using ToString so the decimal places are ALWAYS shown 
+        /////////////////////////////
+
+        ///////// WARNINGS //////////
+        var warnings = BeverageClassifier.Classify(beverage);
+
+        receipt += "\nWarning(s):\n";
+
+        foreach (var warn in warnings.Classifications)     // For each warn in warnings
+        {
+            if (!string.IsNullOrEmpty(warn))          // check if the list is empty first
+                receipt += "  - " + warn + "\n";     // Topping name
+        }
+
+        receipt += warnings;
+        /////////////////////////////
 
         return receipt;
     }
