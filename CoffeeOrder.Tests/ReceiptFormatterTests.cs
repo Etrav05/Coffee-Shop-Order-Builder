@@ -154,7 +154,7 @@ namespace CoffeeOrder.Tests
             StringAssert.Contains(result, expected);
         }
 
-        //////////////////////////////////// FAILING TEST ////////////////////////////////////
+        //////////////////////////////////// FAILING TESTS ////////////////////////////////////
         [TestMethod]
         public void CreateBeverage_FormatData_CheckWarnings()
         {
@@ -174,6 +174,34 @@ namespace CoffeeOrder.Tests
             string expected = "Warning(s):\n  - Caffinated\n  - Contains dairy\n  - Not vegan\n  - Adult\n  - Contains nuts"; 
                                                                                                        // Nuts not implemented yet
             string promoCode = null;
+
+            // Act
+            var result = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            // Assert
+            StringAssert.Contains(result, expected);
+        }
+
+        [TestMethod]
+        public void CreateBeverage_FormatData_DescribeFailingPromocode()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge",
+                                "Hot",
+                                "Cow",
+                                null,
+                                3,
+                                ["Caramel", "Chocolate", null],
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"],
+                                false
+            );
+
+            string expected = "Promocode temperture does not match beverage temperture";
+
+            // Promocode warning description not implemented yet
+            string promoCode = "SUMMER2025";
 
             // Act
             var result = ReceiptFormatter.Receipt(beverage, promoCode);

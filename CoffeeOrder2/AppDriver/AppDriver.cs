@@ -91,23 +91,25 @@ namespace CoffeeOrder.AppDriver
                     Console.Write("\nEnter number here (One at a time): ");
 
                     if (!int.TryParse(Console.ReadLine(), out choiceSelection) || choiceSelection < 1 || choiceSelection > options.Length) // check if value is vaild
-                        Console.WriteLine("Invaild " + type + " option");                                               // if not, error message
+                        Console.WriteLine("Invaild " + type + " option");                                                                 // if not, error message
                 }
 
                 while (choiceSelection < 1 || choiceSelection > options.Length); // while the input is outside the given range
 
                 chosenValues[i] = choiceSelection;
             }
+            string[] chosenItems = new string[amountSelection];
 
             Console.Write("You selected: ");
             foreach (var choice in chosenValues)
             {
                 Console.Write(options[choice - 1] + " ");
+                chosenItems[choice - 1] = options[choice - 1];
             }
 
             Console.WriteLine("\n"); // just spacing
 
-            return options;
+            return chosenItems;
         }
 
         public static string[][] AppDriverUI()
