@@ -98,13 +98,15 @@ namespace CoffeeOrder.AppDriver
 
                 chosenValues[i] = choiceSelection;
             }
+
             string[] chosenItems = new string[amountSelection];
 
             Console.Write("You selected: ");
-            foreach (var choice in chosenValues)
+            for (int i = 0; i < chosenValues.Length; i++)
             {
+                int choice = chosenValues[i]; // menu number user typed
                 Console.Write(options[choice - 1] + " ");
-                chosenItems[choice - 1] = options[choice - 1];
+                chosenItems[i] = options[choice - 1];
             }
 
             Console.WriteLine("\n"); // just spacing
