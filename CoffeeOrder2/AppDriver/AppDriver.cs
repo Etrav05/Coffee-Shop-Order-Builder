@@ -15,7 +15,7 @@ namespace CoffeeOrder.AppDriver
 {
     public class AppDriver
     {
-        public static bool UIBasicChoices(string[] options, string type)
+        public static string UIBasicChoices(string[] options, string type)
         {
             Console.Write("Choose your " + type + ":\n");
 
@@ -36,13 +36,11 @@ namespace CoffeeOrder.AppDriver
 
             Console.WriteLine("You selected: " + options[selection - 1] + "\n");
 
-            if (type == "milk" && selection != options.Length)
-                return true; // make sure we cant select a milk and plant milk
-            else
-                return false;
+           
+            return options[selection - 1];
         }
 
-        public static void UIAmountChoices(int max, string type)
+        public static int UIAmountChoices(int max, string type)
         {
             int selection;     // The users selected # of things
 
@@ -57,9 +55,11 @@ namespace CoffeeOrder.AppDriver
             while (selection < 1 || selection > max); // while the input is outside the given range
 
             Console.WriteLine("You selected: " + selection + "\n");
+
+            return selection;
         }
 
-        public static void UIMultiSelectChoices(string[] options, int max, string type)
+        public static string[] UIMultiSelectChoices(string[] options, int max, string type)
         {
             // Selecting amount of "thing"
             int amountSelection; // The users selected item #
@@ -106,12 +106,16 @@ namespace CoffeeOrder.AppDriver
             }
 
             Console.WriteLine("\n"); // just spacing
+
+            return options;
         }
 
-        public static void AppDriverUI()
+        public static string[][] AppDriverUI()
         {
+            string[][] order = new string[10][]; // create a string[] to hold the order (everything as string[])
+                                                // note: everythings gotta be converted to string[]'s for this to work
+
             Console.Write("========== CoffeeZilla inc ==========\n\n");
-            bool milked = false;
             int MAXSHOTS = 4;      // max shots allowed
             int MAXSYRUPS = 5;    // max syrups allowed
             int MAXTOPPINGS = 6; // max toppings allowed (just defined as 6 because max wasnt listed)
@@ -119,54 +123,126 @@ namespace CoffeeOrder.AppDriver
             // Basedrink
             string[] baseDrinks = { "London Fog", "Coffee", "Hot Chocolate", "Frappee" };
 
-            UIBasicChoices(baseDrinks, "drink");
+            order[0] = new string[] { UIBasicChoices(baseDrinks, "drink") };
 
             // Size
             string[] sizes = { "Small", "Medium", "large", "XLarge" };
 
-            UIBasicChoices(sizes, "size");
+            order[1] = new string[] { UIBasicChoices(sizes, "size") };
 
             // Temp
             string[] temps = { "Hot", "Iced" };
 
-            UIBasicChoices(temps, "temperature");
+            order[2] = new string[] { UIBasicChoices(temps, "temperature") };
 
-            // Milk
-            string[] milks = { "Cow", "Goat", "Alpaca", "Special", "None"};
+            // Milk 
+            string[] milks = { "Cow", "Goat", "Alpaca", "Special", "none" };
+            string milkChoice = UIBasicChoices(milks, "milk");
+            order[3] = milkChoice.Equals("none") ? null : new string[] { milkChoice }; // if the user selects "none" then null will be add to the order
+                                                                                      // otherwise, the regular choice will be added
+            // Plant milk
+            string[] pMilk = { "Oat", "Almond", "Walnut", "none" };
 
-            milked = UIBasicChoices(milks, "milk");
-
-            // Plant milks
-            string[] pMilk = { "Oat", "Almond", "Walnut", "None" };
-
-            if (milked == false ) // skip this option if milk has already been selected
-                UIBasicChoices(pMilk, "Plant milk");
+            if (order[3] == null) // Only asked if no regular milk was chosen
+            {
+                string plantChoice = UIBasicChoices(pMilk, "plant milk");
+                order[4] = plantChoice.Equals("none") ? null : new string[] { plantChoice };
+            }
+            else
+                order[4] = null;
 
             // Shots 
-            UIAmountChoices(MAXSHOTS, "expresso shots");
+            order[5] = new string[] { UIAmountChoices(MAXSHOTS, "expresso shots").ToString() };
 
             // Syrups
             string[] syrups = { "Caramel", "Chocolate", "Strawberry", "Vanilla", "Unicorn" };
 
-            UIMultiSelectChoices(syrups, MAXSYRUPS, "syrup");
+            order[6] = UIMultiSelectChoices(syrups, MAXSYRUPS, "syrup");
 
             // Toppings
             string[] toppings = { "Nuts", "Flakes", "Sprinkles", "Glass", "Bark" };
 
-            UIMultiSelectChoices(toppings, MAXTOPPINGS, "topping");
+            order[7] = UIMultiSelectChoices(toppings, MAXTOPPINGS, "topping");
 
             // Decaf boolian
             string[] yesNo = { "Yes", "No" };
 
-            UIBasicChoices(yesNo, "decaf");
+            order[8] = new string[] { UIBasicChoices(yesNo, "decaf") };
+
+            // Promotion
+            string[] promoCodes = { "HONOUR", "SUMMER2025", "CEODISCOUNT", "5OFF" };
+
+            Console.Write("\nEnter promocode here: ");
+            string input = Console.ReadLine();
+
+            // Check if input is a valid promo code
+            if (promoCodes.Contains(input?.ToUpper()))
+                Console.WriteLine("Promocode accepted\n\n");
+            else
+                Console.WriteLine("Invalid promocode\n\n");
+
+            order[9] = new string[] { input };
+
+            return order;
         }
 
 
         static int Main()
         {
-            AppDriverUI();
+            string[][] order = AppDriverUI();
 
-            return 0; // exit code
+            // Already properly fomatted types
+            string baseDrink = order[0][0];
+            string size = order[1][0];
+            string temp = order[2][0];
+            string? milk = order[3]?[0];       // will be null if "none"
+            string? plantMilk = order[4]?[0];  // will be null if "none"
+
+            // Shots (converted from string to int)
+            int shots = int.Parse(order[5][0]);
+
+            // Multiselections that are already arrays
+            IEnumerable<string> syrups = order[6];
+            IEnumerable<string> toppings = order[7];
+
+            // Decaf (converted from string: "Yes"/"No" to their bools)
+            bool isDecaf = false;
+            if (order[8][0] == "Yes")
+                isDecaf = true;
+
+            // Promocode
+            string promoCode = order[9][0];
+
+            // Create Beverage
+            Beverage beverage = new Beverage(
+                baseDrink,
+                size,
+                temp,
+                milk,
+                plantMilk,
+                shots,
+                syrups,
+                toppings,
+                isDecaf
+            );
+
+
+
+            // Validate drink
+            var validateBeverage = OrderValidator.Validate(beverage);
+
+            // Classifiy drink
+            var classifierResult = BeverageClassifier.Classify(beverage); // string[]
+
+            // Calaculate price of drink
+            var pricingResult = PricingCalculator.PricingCalculation(beverage); // double
+
+            // Make receipt
+            var receipt = ReceiptFormatter.Receipt(beverage, promoCode);
+
+            Console.WriteLine(receipt);
+
+            return 0;
         }
     }
 }
