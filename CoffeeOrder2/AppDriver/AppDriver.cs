@@ -126,7 +126,7 @@ namespace CoffeeOrder.AppDriver
             order[0] = new string[] { UIBasicChoices(baseDrinks, "drink") };
 
             // Size
-            string[] sizes = { "Small", "Medium", "large", "XLarge" };
+            string[] sizes = { "Small", "Medium", "Large", "XLarge" };
 
             order[1] = new string[] { UIBasicChoices(sizes, "size") };
 
@@ -239,7 +239,8 @@ namespace CoffeeOrder.AppDriver
 
             // Make receipt
             var receipt = ReceiptFormatter.Receipt(beverage, promoCode);
-
+            
+            // Write the receipt into the console
             Console.WriteLine(receipt);
 
             return 0;
