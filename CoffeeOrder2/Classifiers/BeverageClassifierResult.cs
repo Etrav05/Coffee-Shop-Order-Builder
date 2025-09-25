@@ -1,6 +1,5 @@
 ﻿namespace CoffeeOrder.Classifiers;
 
-
 public sealed class BeverageClassifierResult
 {
     public IReadOnlyList<string> Classifications { get; }

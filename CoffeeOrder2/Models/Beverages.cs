@@ -1,6 +1,4 @@
-﻿namespace CoffeeOrder.Models;
-
-// 1. Beverage (model)   
+﻿// 1. Beverage (model)   
 // •	Properties:
 // `BaseDrink` (e.g., Latte/Tea/Chocolate),
 // `Size` (e.g., Tall/Grande/Venti),
@@ -13,6 +11,7 @@
 // flags like `IsDecaf`,
 // etc.
 
+namespace CoffeeOrder.Models;
 
 public class Beverage
 {
