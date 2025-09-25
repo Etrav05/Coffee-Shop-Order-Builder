@@ -16,10 +16,10 @@ namespace CoffeeOrder.Tests
             var beverage = new Beverage(
                                 "London Fog",
                                 "XLarge", // $12
-                                "Hot",
-                                "Cow", // $0
-                                null, // $0
-                                3,   // $1x3
+                                "Iced",  // SUMMER2025 works for iced drinks
+                                "Cow",  // $0
+                                null,  // $0
+                                3,    // $1x3
                                 ["Caramel", null], // $1.25
                                 ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"], // $0.75x5
                                 true
@@ -28,6 +28,33 @@ namespace CoffeeOrder.Tests
             string promo = "SUMMER2025"; // 20% discount
 
             double expected = 16.00;
+
+            // Act
+            var result = PromotionHelper.ApplyPromotion(beverage, promo);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void CreateBeverage_CalculatePromotion_IncorrectTemp_Expected_20Dollars()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge", // $12
+                                "Hot",  // SUMMER2025 only works for iced drinks
+                                "Cow",  // $0
+                                null,  // $0
+                                3,    // $1x3
+                                ["Caramel", null], // $1.25
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"], // $0.75x5
+                                true
+            );
+
+            string promo = "SUMMER2025"; // 20% discount
+
+            double expected = 20.00; // no discount
 
             // Act
             var result = PromotionHelper.ApplyPromotion(beverage, promo);
@@ -61,9 +88,33 @@ namespace CoffeeOrder.Tests
 
             // Assert
             Assert.AreEqual(expected, result);
+        }
 
+        [TestMethod]
+        public void CreateBeverage_CalculatePromotion_AllDiscount_Expected_20Dollars()
+        {
+            // Arrange
+            var beverage = new Beverage(
+                                "London Fog",
+                                "XLarge", // $12
+                                "Iced",  
+                                "Cow",  // $0
+                                null,  // $0
+                                3,    // $1x3
+                                ["Caramel", null], // $1.25
+                                ["Nuts", "Flakes", "Sprinkles", "Glass", "Bark"], // $0.75x5
+                                true
+            );
 
+            string promo = "CEODISCOUNT"; // 99% discount
 
+            double expected = 00.20; // 20 cent drink
+
+            // Act
+            var result = PromotionHelper.ApplyPromotion(beverage, promo);
+
+            // Assert
+            Assert.AreEqual(expected, result);
         }
     }
 }

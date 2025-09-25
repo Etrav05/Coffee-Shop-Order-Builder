@@ -24,16 +24,22 @@ public class PromotionHelper
     public static double ApplyPromotion(Beverage beverage, string promoCode)
     {
         double price = PricingCalculator.PricingCalculation(beverage);
-        double discountedPrice = 0;
+        double discountedPrice = price;
 
-        if (promoCode != null && promotionsDictionary.TryGetValue(promoCode, out var promo)) // if the promoCode is not null && the promoCode is in the promotionsDictionary 
-        {                                                                                    // then the tuple is grabbed (discount, temp) 
-            if (promo.temp == "All" || promo.temp == beverage.Temp)                        // Apply only if beverage matches the Temp defined
+
+        foreach (KeyValuePair<string, (double discount, string temp)> promo in promotionsDictionary)
+        {
+            if (promoCode == promo.Key) // If the promo code is found in the dictionary
             {
-                discountedPrice = price * (1 - promo.discount);
+                if (promo.Value.temp == "All" || promo.Value.temp == beverage.Temp) // And the beverage temp matches the promo Temp defined
+                {
+                    discountedPrice = price * (1 - promo.Value.discount);
+                }
+
+                break;
             }
         }
-
+            
         return Math.Round(discountedPrice, 2); // round discounted price to the nearest hundredth
     }
 }
