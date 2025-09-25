@@ -47,7 +47,7 @@ namespace CoffeeOrder.Tests
     {
 
         [TestMethod]
-        public void CreateBeverage_CalculatePricing_Expected_20Dollars() // Checking Decaf classifier
+        public void CreateBeverage_CalculatePricing_Expected_20Dollars()
         {
             // Arrange
             var beverage = new Beverage(
@@ -67,15 +67,13 @@ namespace CoffeeOrder.Tests
             // Act
             var result = PricingCalculator.PricingCalculation(beverage);
 
-            Console.WriteLine("Total price: " + result);
-
             // Assert
             Assert.AreEqual(expected, result);
                           
         }
 
         [TestMethod]
-        public void CreateBeverage_CalculatePricing_NoAddons_Expected_7Dollars() // Checking Decaf classifier
+        public void CreateBeverage_CalculatePricing_NoAddons_Expected_7Dollars()
         {
             // Arrange
             var beverage = new Beverage(
@@ -94,8 +92,6 @@ namespace CoffeeOrder.Tests
 
             // Act
             var result = PricingCalculator.PricingCalculation(beverage);
-
-            Console.WriteLine("Total price: " + result);
 
             // Assert
             Assert.AreEqual(expected, result);
