@@ -2,13 +2,22 @@ Assignment 1 - CoffeeOrder Project
 
 Author: Evan Travis - 9039851
 
+# CoffeeOrder Walkthrough (Validator + Tests)
 
-==== Test run steps ===
+## Quick Start
+```bash
+# From this folder:
+dotnet restore
+dotnet test
+```
 
-1. Open the solution "CoffeeOrder.sln" in Visual Studio
-2. Set "CoffeeOrder" to the startup project
-3. Build the solution
-4. Run the program to start the CoffeeOrder console application
-5. To run the tests:
-   - Go to Test --> Run All Tests
-   - Confirm that all (but 2) test cases in CoffeeOrder.Tests pass
+## Run thin UI program
+```bash
+# From this folder:
+dotnet build
+dotnet run --project CoffeeOrder2
+```
+
+### Project layout
+- `CoffeeOrder2/` – production code (class library)
+- `CoffeeOrder.Tests/` – MSTest tests referencing the class library

@@ -48,15 +48,15 @@ namespace CoffeeOrder.AppDriver
             {
                 Console.Write("How many " + type + " do you want (Max " + max + ")? ");
 
-                if (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > max) // check if value is vaild
+                if (!int.TryParse(Console.ReadLine(), out selection) || selection < 0 || selection > max) // check if value is vaild
                     Console.WriteLine("Invaild " + type + " option");                                    // if not, error message
             }
 
-            while (selection < 1 || selection > max); // while the input is outside the given range
+            while (selection < 0 || selection > max); // while the input is outside the given range
 
             Console.WriteLine("You selected: " + selection + "\n");
 
-            return selection;
+            return selection; 
         }
 
         public static string[] UIMultiSelectChoices(string[] options, int max, string type)
@@ -68,11 +68,11 @@ namespace CoffeeOrder.AppDriver
             {
                 Console.Write("How many " + type + " do you want (Max " + max + ")? ");
 
-                if (!int.TryParse(Console.ReadLine(), out amountSelection) || amountSelection < 1 || amountSelection > max) // check if value is vaild
+                if (!int.TryParse(Console.ReadLine(), out amountSelection) || amountSelection < 0 || amountSelection > max) // check if value is vaild
                     Console.WriteLine("Invaild amount option");                                                            // if not, error message
             }
 
-            while (amountSelection < 1 || amountSelection > max); // while the input is outside the given range
+            while (amountSelection < 0 || amountSelection > max); // while the input is outside the given range
 
 
             // Selecting what "thing(s)"
@@ -120,7 +120,7 @@ namespace CoffeeOrder.AppDriver
                                                 // note: everythings gotta be converted to string[]'s for this to work
 
             Console.Write("========== CoffeeZilla inc ==========\n\n");
-            int MAXSHOTS = 4;      // max shots allowed
+            int MAXSHOTS = 4;      // max shots options allowed (0 - 4)
             int MAXSYRUPS = 5;    // max syrups allowed
             int MAXTOPPINGS = 6; // max toppings allowed (just defined as 6 because max wasnt listed)
 
